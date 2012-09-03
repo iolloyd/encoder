@@ -26,4 +26,3 @@ $responder = new Responder(1, $config, $db, $log_file);
 $xml = $_POST['xml'];
 
 $responder->handleResponse($xml);
-$responder->informLloyd();

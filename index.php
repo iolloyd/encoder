@@ -8,7 +8,7 @@ set_include_path(dirname(__FILE__) . '/tests:'. get_include_path());
 require_once('Responder.php');
 require_once('Configuration.php');
 
-$config = new Configuration();
+$config = new Configuration('config');
 $config = $config->getConfiguration();
 
 $db_config = $config['db_settings'];

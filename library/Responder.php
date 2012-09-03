@@ -10,17 +10,25 @@ class Responder {
     }
 
     public function handleResponse($xml){
-        $this->logRawXml($xml);
-
         $status = $this->getMapping($xml, 'status');
         $media_id = $this->getMapping($xml, 'media_id');
         $stmt = $this->db->prepare($this->sql['update_status']);
         $stmt->execute(array(':status' => $status, ':media_id' => $media_id));
-        $this->logResponse($status, $media_id);
+        $this->handleLogging();
+    }
+
+    protected function handleLogging(){
+        if (true == $this->config->log_raw_xml) {
+          $this->logRawXml($xml);
+        }
+
+        if (true == $this->config->log_xml_responses) {
+          $this->logResponse($status, $media_id);
+        }
     }
 
     protected function logRawXml($xml){
-            file_put_contents('raw_xml.log', $xml, FILE_APPEND);
+            file_put_contents($this->config->raw_xml_log, $xml, FILE_APPEND);
     }
 
     protected function logResponse($status, $media_id){
@@ -34,15 +42,8 @@ class Responder {
     protected function getMapping($xml, $tag){
         $mapping_info = $this->config['get_mapping'][$this->provider][$tag];
         $xml =  $this->xmlToArray($xml);
-        eval("\$provider_tag = \$xml->$mapping_info;");
+        $provider_tag = call_user_func_array(array($xml, $mapping_info), array());
         return $provider_tag;
-    }
-
-    public function informLloyd(){
-        $to = 'lloyd@dreamstarcash.com';
-        $subject = 'staging box encoder test';
-        $message = 'I have own your ships now';
-        mail($to, $subject, $message);
     }
 
     protected function xmlToArray($xml){

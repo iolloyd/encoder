@@ -5,7 +5,7 @@ class TestResponder extends Zend_Test_PHPUnit_ControllerTestCase {
   protected $responder;
    
     public function setUp(){
-        $config = new Configuration();
+        $config = new Configuration('test');
         $this->config = $config->getConfiguration();
         $this->sql = $this->config['sql'];
         $this->db = new PDO('sqlite:test.sqlite');

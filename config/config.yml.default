@@ -1,8 +1,8 @@
 db_settings:
     host: 127.0.0.1
-    username: foo
-    password: bar 
-    dbname: encoding_queue 
+    username: <your_username_here> 
+    password: <your_password_here> 
+    dbname: <your_db_name_here>
 
 client_settings:
     max_redirects: 0,
@@ -10,7 +10,7 @@ client_settings:
     keepalive: true,
 
 xml_data:
-    api_url:     "https://manage.encoding.com"
+    api_url:     <this is currently https://manage.encoding.com>
     username:    <your username here>
     userid:      <your userid> 
     userkey:     <your userkey>
@@ -23,56 +23,4 @@ xml_data:
         output: wmv 
         destination: <your destination file>
 
-good_xml_response: >
-  <result>
-    <mediaId>321</mediaId>
-    <source>some_source</source>
-    <status>done_done</status>
-    <description>funky done description</description>
-    <format>
-      <output>3DG</output>
-      <destination>coolplace</destination>
-      <destination_status>SAVED</destination_status>
-    </format>
-  </result>
 
-bad_xml_response: >
-  <result>
-    <mediaId>321</mediaId>
-    <source>some_source</source>
-    <status>Error</status>
-    <description>funky done description</description>
-    <format>
-      <output>3DG</output>
-      <destination>coolplace</destination>
-      <destination_status>
-          Error (All your ships we have)
-      </destination_status>
-      <suggestion>Buy more ships to find</suggestion>
-    </format>
-  </result>
-
-sql:
-    create_table_queue: >
-        DROP TABLE IF EXISTS queue;
-        CREATE TABLE queue(
-            media_id INTEGER, 
-            source TEXT, 
-            destination TEXT, 
-            priority INTEGER, 
-            status TEXT
-        )
-
-    add_to_queue: >
-        INSERT INTO queue (media_id, source, destination, priority, status) 
-        VALUES (?, ?, ?, ?, ?)
-
-    clean_out_queue: >
-        DROP TABLE queue
-
-    get_queued_video: >
-        SELECT source, destination, priority, status 
-        FROM queue limit 1
-
-    update_status: >
-        UPDATE queue set status = :status WHERE media_id = :media_id 

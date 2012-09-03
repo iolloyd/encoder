@@ -1,11 +1,6 @@
 <?php
-error_reporting(E_ALL);
-
 require_once dirname(__FILE__) . "/testBootstrap.php";
-require_once "Zend/Test/PHPUnit/ControllerTestCase.php"; 
 require_once dirname(dirname(__FILE__))."/library/Encoder.php";
-require_once dirname(dirname(__FILE__))."/library/Configuration.php";
-
 class TestEncoderApi extends Zend_Test_PHPUnit_ControllerTestCase {
     protected $encoder;
     protected $source = 'fake_source';

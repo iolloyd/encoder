@@ -2,18 +2,17 @@
 require_once "spyc.php";
 
 class Configuration {
-    private $config;
+  private $config;
 
-    public function __construct($file=false){
-        if (!$file) {
-            $file = dirname(dirname(__FILE__)).'/config/config.yml';
-        }
-        $this->config = spyc_load_file($file);
-    }
+  public function __construct($file_name){
+    $dir = dirname(dirname(__FILE__)) . '/config';
+    $file = "$dir/$file_name.yml";
+    $this->config = spyc_load_file($file);
+  }
 
-    public function getConfiguration(){
-        return $this->config;
-    }
+  public function getConfiguration(){
+    return $this->config;
+  }
 
 }
 

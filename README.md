@@ -1,4 +1,4 @@
-Dreamstar Cash encoding library for encoding.com API services
+PHP Encoding library for encoding.com API services
 =============================================================
 
 > A PHP library that contains a number of classes to allow the use
@@ -77,7 +77,3 @@ Example Usage
 
         $encoder = new Encoder($conf, $http_client, $db);
         $response = $encoder->requestEncoding('some/source', 'some/destination', 'priority');
-
-
-
-

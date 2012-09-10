@@ -34,21 +34,6 @@ Responder
 > The responder will update the local entry based on the media id saved 
 > beforehand from the encoder.  
 
-Storage
--------
-
-> Currently the library expects mysql to be used to store data using the following
-> schema:
-
-        CREATE TABLE queue(
-            int media_id, 
-            text source, 
-            text destination, 
-            int priority, 
-            varchar(20) status
-        )
-
-
 Usage
 -----
 

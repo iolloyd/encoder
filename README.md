@@ -34,7 +34,6 @@ Responder
 > The responder will update the local entry based on the media id saved 
 > beforehand from the encoder.  
 
-
 Storage
 -------
 

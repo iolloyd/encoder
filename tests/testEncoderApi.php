@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . "/testBootstrap.php";
 require_once dirname(dirname(__FILE__))."/library/Encoder.php";
-class TestEncoderApi extends Zend_Test_PHPUnit_ControllerTestCase {
+class TestEncoderApi extends Zend_Test_PHPUnit_TestCase {
     protected $encoder;
     protected $source = 'fake_source';
     protected $destination = 'fake_destination';

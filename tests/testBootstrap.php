@@ -1,6 +1,9 @@
 <?php
 error_reporting(E_ALL);
-ini_set('display_errors', true);
+ini_set('display_errors', 1);
+
+set_include_path(dirname(__FILE__) . '/library:'. get_include_path());
+set_include_path(dirname(__FILE__) . '/tests:'. get_include_path());
 
 $zend = dirname(__FILE__)."/Zend";
 $tests = dirname(__FILE__);

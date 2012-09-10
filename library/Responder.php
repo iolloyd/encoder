@@ -1,28 +1,33 @@
 <?php
 class Responder {
 
-  public function __construct($provider, $config, $db, $log_file=false){
+  public function __construct($provider, $config, $db, $logFile=false){
     $this->provider = $provider;
     $this->config = $config;
     $this->sql = $this->config['sql'];
     $this->db = $db;
-    $this->log_file = $log_file;
+    $this->logFile = $logFile;
   }
 
   public function handleResponse($xml){
     $status = $this->getMapping($xml, 'status');
-    $media_id = $this->getMapping($xml, 'media_id');
+    $mediaId = $this->getMapping($xml, 'media_id');
     $stmt = $this->db->prepare($this->sql['update_status']);
-    $stmt->execute(array(':status' => $status, ':media_id' => $media_id));
-    $this->handleLogging();
+    $stmt->execute(array(':status' => $status, ':mediaId' => $mediaId));
+    $this->handleLogging($xml);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return array(
+      'media_id' => $result['media_id'],
+      'status'   => $result['status'],
+    );
   }
 
-  protected function handleLogging(){
-    if (true == $this->config->log_raw_xml) {
+  protected function handleLogging($xml){
+    if (true == $this->config['log_raw_xml']) {
       $this->logRawXml($xml);
     }
 
-    if (true == $this->config->log_xml_responses) {
+    if (true == $this->config['log_xml_response']) {
       $this->logResponse($status, $media_id);
     }
   }
@@ -41,9 +46,9 @@ class Responder {
 
   protected function getMapping($xml, $tag){
     $mapping = $this->config['get_mapping'];
-    $mapping_info = $mapping[$this->provider]['$tag'];
+    $mapping_info = $mapping[$this->provider][$tag];
     $xml =  $this->xmlToArray($xml);
-    $provider_tag = call_user_func_array(array($xml, $mapping_info), array());
+    $provider_tag = $xml->{$mapping_info}; 
     return $provider_tag;
   }
 

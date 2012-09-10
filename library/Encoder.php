@@ -4,7 +4,6 @@ require_once "Zend/Db.php";
 require_once "dataConverter.php";
 
 class Encoder {
-
     protected $db;
     protected $config;
     protected $http_client;
